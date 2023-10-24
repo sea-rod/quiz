@@ -1,0 +1,60 @@
+#root>div{
+    height: 65vh;
+}
+form h1{
+    color: aliceblue;
+}
+input.form-control{
+    border: none;
+    box-shadow: rgba(0, 13, 20, 1) 0px 3px 8px;
+    color: rgb(230, 230, 230);
+    background-color: transparent;
+    
+}
+input.form-control:focus{
+    background-color: #1F2A30;
+    color: aliceblue;
+    border: none;
+    box-shadow: rgba(175, 175, 175, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+}
+div.container-fluid div.d-flex div.col-12 {
+    background-color: rgb(31, 42, 48);
+    color: rgb(171, 171, 171);
+    border-radius: 0px;
+}
+::-ms-reveal {
+    filter: invert(100%);
+}
+
+.btn-blue{
+    /* border-radius: 10px; */
+    border: none;
+    background-color: rgb(50, 106, 156);
+    color: aliceblue;
+    font-size: 17px;
+    background: linear-gradient(to left, rgb(50, 106, 156) 50%, rgb(30, 86, 136) 50%) right;
+    background-size: 200%;
+    transition: .5s ease-out;
+    
+}
+
+.btn-blue:hover{
+    color: rgb(203, 208, 212);
+    background-position: left;
+}
+
+.error p{
+    color: red;
+    /* background-color: aqua; */
+}
+
+@media (min-width: 576px) {
+    #root>div {
+        height: 80vh;
+    }
+    
+    div.container-fluid div.d-flex div.col-12 {
+        border-radius: 20px;
+    }
+}

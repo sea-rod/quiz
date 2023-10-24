@@ -1,0 +1,29 @@
+nav{
+    background-color: #1F2A30;
+}
+.nav-link{
+    color: rgb(230, 230, 230);
+    transition: 0.5s;
+}
+.nav-link:hover,.nav-link:focus {
+    color: rgb(200, 200, 200);
+    font-size: large;
+    box-sizing: border-box;
+}
+
+button a{
+    color: rgb(230, 230, 230);
+    text-decoration: none;
+}
+
+button a:hover {
+    color: rgb(200, 200, 200);
+}
+
+.btn-plain{
+    border: 1px solid rgb(230, 230, 230);
+}
+
+.btn-plain:hover{
+    border: 1px solid rgb(200, 200, 200);
+}
