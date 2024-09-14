@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-function Question({ id, question, option }) {
+
+function Question({pk, id, question, option,handleOnChange }) {
+  const handleChange = (event) => {
+    handleOnChange(pk, event.target.value);
+  };
+
   return (
     <div className="mx-auto col-12" id={`question-${id}`}>
-      <p className="question">Q1:{question}</p>
+      <p className="question">
+        Q{id + 1}:{question}
+      </p>
       <div className="form-check py-0">
         {option.map((val, i) => {
           return (
@@ -12,7 +19,9 @@ function Question({ id, question, option }) {
               type="radio"
               id={`default-${i}`}
               label={val}
+              value={val}
               name={`input-${id}`}
+              onChange={handleChange}
             />
           );
         })}

@@ -1,66 +1,45 @@
 import "./Form.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "./services/axios";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const refreshAuthToken = async (refreshToken) => {
-    try {
-      const response = await axios.post("/api/token/refresh/", {
-        refresh: refreshToken,
-      });
-      const newAccessToken = response.data.token;
-      return newAccessToken;
-    } catch (error) {
-      // Handle error (e.g., token refresh failure)
-      throw error;
-    }
-  };
-
-  const [form, setForm] = useState({ user: "", passwd: "" });
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const change_form_data = (event) => {
-    const { name, value } = event.target;
-    setForm({
-      ...form,
-      [name]: value,
+  const initialFormData = Object.freeze({
+    username: "",
+    password: "",
+  });
+  const [formData, updateForm] = useState(initialFormData);
+  const handleChange = (e) => {
+    console.log("ll");
+    
+    updateForm({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
     });
   };
-//TODO: 
-  // useEffect(() => {
-  //   console.log("saved token");
-  // }, []);     
-
-  const get_token = () => {
-    console.log(form.user);
-    const apiUrl = "http://127.0.0.1:8000/api/token/";
-    const requestData = {
-      username: form.user,
-      password: form.passwd,
-    };
-    axios
-      .post(apiUrl, requestData)
-      .then((response) => {
-        console.log("Response:", response.data);
-        localStorage.setItem("accessToken", response.data.access);
-        localStorage.setItem("refreshToken", response.data.refresh);
+  const [error, seterror] = useState(null);
+  const handleSubmit = () => {
+    console.log("submit btn clicked", formData);
+    axiosInstance
+      .post("api/token/", {
+        username: formData.username,
+        password: formData.password,
+      })
+      .then((res) => {
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
+        axiosInstance.defaults.headers["Authorization"] =
+          "Bearer " + localStorage.getItem("access_token");
         navigate("/");
         let event = new Event("addedToken");
+        // toast.success("Login Successful !");
         window.dispatchEvent(event);
       })
       .catch((error) => {
-        let msg = "";
-        Object.keys(error.response.data).forEach((data) => {
-          console.log(`${data}:${error.response.data[data]}`);
-          msg += `${data}: ${error.response.data[data]} `;
-        });
-        setErrorMessage(msg);
-        console.error("Error:", error);
+        seterror(error.response.data.detail);
       });
   };
-
   return (
     <>
       <div className="m-0 container-fluid pt-5 d-flex justify-content-center align-items-center bg-sccess px-0">
@@ -72,10 +51,10 @@ function LoginForm() {
                 <input
                   type="text"
                   id="user"
-                  name="user"
-                  value={form.user}
+                  name="username"
+                  value={formData.user}
                   autoComplete="true"
-                  onChange={change_form_data}
+                  onChange={handleChange}
                   placeholder="Username"
                   className="form-control"
                   required
@@ -89,10 +68,10 @@ function LoginForm() {
                   type="password"
                   placeholder="Password"
                   id="passwd"
-                  name="passwd"
+                  name="password"
                   autoComplete="current-password"
-                  value={form.passwd}
-                  onChange={change_form_data}
+                  value={formData.passwd}
+                  onChange={handleChange}
                   className="form-control"
                   required
                 />
@@ -100,15 +79,15 @@ function LoginForm() {
                   Password
                 </label>
               </div>
-              {errorMessage && (
+              {error && (
                 <span style={{ color: "red" }}>
                   <div class="alert alert-danger mt-4">
-                    <strong>{errorMessage}</strong>
+                    <strong>{error}</strong>
                   </div>
                 </span>
               )}
               <input
-                onClick={get_token}
+                onClick={handleSubmit}
                 type="button"
                 value={"Login"}
                 className="btn btn-blue mt-5 col-12"

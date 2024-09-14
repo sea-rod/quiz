@@ -22,7 +22,7 @@ root.render(
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<SignUpForm />} />
         <Route path="questionlist" element={<QuestionList/>}/>
-        <Route path="question/:id" element={<QuestionDetails/>}/>
+        <Route path="question/:id/*" element={<QuestionDetails/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
