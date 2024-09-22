@@ -11,16 +11,16 @@
     text-decoration:none;
 }
 
-.d-flex.col-12 a{
+#questionbank .d-flex.col-12 a{
     padding: 0;
     text-decoration: none;
 }
 
-#questionbank div.mx-auto.col-12 div {
+/* #questionbank div.mx-auto.col-12 div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
+} */
 
 #questionbank div.mx-auto.col-12 div.form-check input{
     margin-right:5px

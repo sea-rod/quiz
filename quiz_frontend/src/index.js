@@ -10,7 +10,8 @@ import { Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-
+import Result from "./Result";
+import Question from "./Question";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,8 +22,9 @@ root.render(
         <Route path="/" element={<Main />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="signup" element={<SignUpForm />} />
-        <Route path="questionlist" element={<QuestionList/>}/>
-        <Route path="question/:id/*" element={<QuestionDetails/>}/>
+        <Route path="questionlist" element={<QuestionList />} />
+        <Route path="question/:id/*" element={<QuestionDetails />} />
+        <Route path="result/" element={<Result />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "./services/axios";
+import QuestionListOfLinks from "./QuestionListOfLinks";
 import Question from "./Question";
 import "./question.css";
 
@@ -15,6 +16,7 @@ function QuestionDetails() {
   const [data, setdata] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [answer, setAnswer] = useState(new Map());
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     const url = `quiz/${id}/questions/`;
@@ -67,38 +69,46 @@ function QuestionDetails() {
         ])
     );
   };
+
+  const onStartClick = () => {
+    setStart(true);
+  };
+
   return (
     <div id="questionbank" className="d-flex flex-column col-12 container p-5">
-      {/* <BrowserRouter> */}
-      {data.map((val, i) => {
-        return <Link to={`quest/${val.id}`}>{`quest ${i+1}`}</Link>;
-      })}
-      <Routes>
-        {data.map((val, i) => {
-          return (
-            <Route
-              path={`quest/${val.id}`}
-              element={
-                <Question
-                  id={i}
-                  pk={val.id}
-                  key={i}
-                  question={val.question}
-                  option={Object.values(val.options)}
-                  handleOnChange={handleOptionChange}
+      {start ? (
+        <>
+          <QuestionListOfLinks links={data} />
+          <Routes>
+            {data.map((val, i) => {
+              return (
+                <Route
+                  path={`quest/${i + 1}`}
+                  element={
+                    <Question
+                      id={i}
+                      pk={val.id}
+                      key={i}
+                      question={val.question}
+                      option={Object.values(val.options)}
+                      handleOnChange={handleOptionChange}
+                    />
+                  }
                 />
-              }
-            />
-          );
-        })}
-      </Routes>
-      {/* </BrowserRouter> */}
-      {/* <Question question={data[0]?data[0].question:""} option={data[0]?Object.values(data[0].options):{}} /> */}
-      <div style={{ backgroundColor: "transparent" }}>
-        <button className="btn btn-primary my-5 col-5" onClick={submit}>
-          submit
-        </button>
-      </div>
+              );
+            })}
+          </Routes>
+          <div style={{ backgroundColor: "transparent" }}>
+            <button className="btn btn-primary my-5 col-5" onClick={submit}>
+              submit
+            </button>
+          </div>
+        </>
+      ) : (
+        <Link to={"quest/1"}>
+          <button className="btn btn-primary" onClick={onStartClick}>Start Test</button>
+        </Link>
+      )}
     </div>
   );
 }

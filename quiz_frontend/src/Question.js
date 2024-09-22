@@ -11,7 +11,7 @@ function Question({pk, id, question, option,handleOnChange }) {
       <p className="question">
         Q{id + 1}:{question}
       </p>
-      <div className="form-check py-0">
+      <div className="form-chec py-0">
         {option.map((val, i) => {
           return (
             <Form.Check
