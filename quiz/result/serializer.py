@@ -9,6 +9,7 @@ class ResultSerializer(serializers.ModelSerializer):
 
 
 class ResultDetailsSerializer(serializers.ModelSerializer):
+    question = serializers.CharField()
     class Meta:
-        fields = "__all__"
+        fields = ("result","question","answer","option_chosed","correct")
         model = ResultDetails
